@@ -27,23 +27,15 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
           inputOptions.input[key] = `pika-treeshake:${val}`;
         }
       }
-      process.platform === 'win32' && console.log(inputOptions);
-      console.log(`array: ${inputOptions.input['array-flatten']}`);
       return inputOptions;
     },
     resolveId(source: string, importer: string) {
-      process.platform === 'win32' && console.log(`resolveId: ${source}`);
-      process.platform === 'win32' && console.log(`importer: ${importer}`);
-      if (process.platform === 'win32' && importer !== undefined) {
-        console.error(importer);
-      }
       if (source.startsWith('pika-treeshake:')) {
         return source;
       }
       return null;
     },
     load(id: string) {
-      process.platform === 'win32' && console.log(`load: ${id}`);
       if (!id.startsWith('pika-treeshake:')) {
         return null;
       }
@@ -66,8 +58,6 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         }
         ${`export {${[...uniqueNamedImports].join(',')}} from '${escapedFileLoc}';`}
       `;
-      console.log('result');
-      process.platform === 'win32' && console.log(result);
       return result;
     },
   };
