@@ -28,6 +28,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         }
       }
       process.platform === 'win32' && console.log(inputOptions);
+      console.log(`array: ${inputOptions.input['array-flatten']}`);
       return inputOptions;
     },
     resolveId(source: string, importer: string) {
