@@ -155,6 +155,7 @@ function resolveWebDependency(dep: string, isExplicit: boolean): DependencyLoc {
   }
   console.log(`depManifestLoc: ${depManifestLoc}`);
   console.log(`foundEntrypoint: ${foundEntrypoint}`);
+  console.log(`loc: ${path.join(depManifestLoc, '..', foundEntrypoint)}`);
   return {
     type: 'JS',
     loc: path.join(depManifestLoc, '..', foundEntrypoint),
