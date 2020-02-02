@@ -153,6 +153,8 @@ function resolveWebDependency(dep: string, isExplicit: boolean): DependencyLoc {
       chalk.italic(`See: ${chalk.underline('https://github.com/pikapkg/web#a-note-on-react')}`),
     );
   }
+  console.log(`depManifestLoc: ${depManifestLoc}`);
+  console.log(`foundEntrypoint: ${foundEntrypoint}`);
   return {
     type: 'JS',
     loc: path.join(depManifestLoc, '..', foundEntrypoint),

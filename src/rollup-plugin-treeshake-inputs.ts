@@ -17,7 +17,6 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
     name: 'pika:treeshake-inputs',
     // Mark some inputs for tree-shaking.
     options(inputOptions: InputOptions) {
-      process.platform === 'win32' && console.log(inputOptions);
       for (const [key, val] of Object.entries(inputOptions.input)) {
         installTargetsByFile[val] = allImports.filter(imp => imp.specifier === key);
         // If an input has known install targets, and none of those have "all=true", mark for treeshaking.
