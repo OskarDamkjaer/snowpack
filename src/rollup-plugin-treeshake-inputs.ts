@@ -29,7 +29,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
       }
       return inputOptions;
     },
-    resolveId(source: string, importer: string) {
+    resolveId(source: string) {
       if (source.startsWith('pika-treeshake:')) {
         return source;
       }
@@ -48,7 +48,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         return summary;
       });
       const uniqueNamedImports = new Set(treeshakeSummary.named);
-      const escapedFileLoc = fileLoc.split('\\').join('/');
+      const escapedFileLoc = fileLoc;
       const result = `
         ${treeshakeSummary.namespace ? `export * from '${escapedFileLoc}';` : ''}
         ${
