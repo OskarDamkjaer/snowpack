@@ -446,16 +446,19 @@ export async function cli(args: string[]) {
     isExplicit = true;
     installTargets.push(...scanDepList(webDependencies, cwd));
   }
-  process.platform === 'win32' && console.log(`targets: ${installTargets}`);
+  process.platform === 'win32' && console.log(`targets:`);
+  process.platform === 'win32' && console.log(installTargets);
   if (include) {
     isExplicit = true;
     installTargets.push(...scanImports({include, exclude, knownDependencies: allDependencies}));
   }
-  process.platform === 'win32' && console.log(`targets: ${installTargets}`);
+  process.platform === 'win32' && console.log(`targets:`);
+  process.platform === 'win32' && console.log(installTargets);
   if (!webDependencies && !include) {
     installTargets.push(...scanDepList(implicitDependencies, cwd));
   }
-  process.platform === 'win32' && console.log(`targets: ${installTargets}`);
+  process.platform === 'win32' && console.log(`targets:`);
+  process.platform === 'win32' && console.log(installTargets);
 
   const hasBrowserlistConfig =
     !!pkgManifest.browserslist ||
