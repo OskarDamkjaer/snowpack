@@ -48,7 +48,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         return summary;
       });
       const uniqueNamedImports = new Set(treeshakeSummary.named);
-      const escapedFileLoc = fileLoc;
+      const escapedFileLoc = fileLoc.split('\\').join('/');
       const result = `
         ${treeshakeSummary.namespace ? `export * from '${escapedFileLoc}';` : ''}
         ${
