@@ -56,7 +56,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         return summary;
       });
       const uniqueNamedImports = new Set(treeshakeSummary.named);
-      const escapedFileLoc = fileLoc.replace('\\', '/');
+      const escapedFileLoc = fileLoc.split('\\').join('/');
       const result = `
         ${treeshakeSummary.namespace ? `export * from '${escapedFileLoc}';` : ''}
         ${
@@ -66,6 +66,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         }
         ${`export {${[...uniqueNamedImports].join(',')}} from '${escapedFileLoc}';`}
       `;
+      console.log('result');
       process.platform === 'win32' && console.log(result);
       return result;
     },
