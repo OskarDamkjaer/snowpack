@@ -27,6 +27,7 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
           inputOptions.input[key] = `pika-treeshake:${val}`;
         }
       }
+      console.log(installTargetsByFile);
       return inputOptions;
     },
     resolveId(source: string) {
@@ -48,7 +49,8 @@ export function rollupPluginTreeshakeInputs(allImports: InstallTarget[]) {
         return summary;
       });
       const uniqueNamedImports = new Set(treeshakeSummary.named);
-      const escapedFileLoc = fileLoc.split('\\').join('/');
+      const escapedFileLoc = fileLoc;
+      console.log(`Escaped: ${fileLoc.split('\\').join('/')}`);
       const result = `
         ${treeshakeSummary.namespace ? `export * from '${escapedFileLoc}';` : ''}
         ${
