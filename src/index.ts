@@ -17,6 +17,7 @@ import rollupPluginReplace from '@rollup/plugin-replace';
 import rollupPluginJson from '@rollup/plugin-json';
 import rollupPluginBabel from 'rollup-plugin-babel';
 import {rollupPluginTreeshakeInputs} from './rollup-plugin-treeshake-inputs.js';
+import loadConfig from './config.js';
 import {scanImports, scanDepList, InstallTarget} from './scan-imports.js';
 
 export interface DependencyLoc {
@@ -63,7 +64,7 @@ ${chalk.bold('Options:')}
 ${chalk.bold('Advanced:')}
     --nomodule          Your app’s entry file for generating a <script nomodule> bundle
     --nomodule-output   Filename for nomodule output (default: 'app.nomodule.js')
-    --external-package  [Internal use only.] May go away at any time.    
+    --external-package  [Internal use only.] May go away at any time.
     `.trim(),
   );
 }
@@ -390,23 +391,26 @@ export async function install(
 }
 
 export async function cli(args: string[]) {
+  // Load config
+  const cliFlags = yargs(args, {array: ['inculde', 'exclude', 'externalPackage']});
   const {
-    help,
-    sourceMap,
-    babel = false,
-    exclude = ['**/__tests__/*', '**/*.@(spec|test).@(js|mjs)'],
-    include,
-    nomodule,
-    nomoduleOutput = 'app.nomodule.js',
-    optimize = false,
-    strict = false,
-    clean = false,
-    dest = 'web_modules',
-    externalPackage: externalPackages = [],
-  } = yargs(args, {array: ['externalPackage']});
+    options: {
+      babel,
+      clean,
+      dest,
+      exclude,
+      externalPackage: externalPackages,
+      include,
+      nomodule,
+      nomoduleOutput,
+      optimize,
+      strict,
+    },
+  } = await loadConfig({options: cliFlags});
+
   const destLoc = path.resolve(cwd, dest);
 
-  if (help) {
+  if (cliFlags.help) {
     printHelp();
     process.exit(0);
   }
